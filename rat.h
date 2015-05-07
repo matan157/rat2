@@ -6,10 +6,17 @@ class Rat {
 	private:
 		int numerator;
 		int denominator;
+		bool NaN;
 	public:
 		// constructors
-		Rat Rat(int);
-		Rat Rat(int,int);
-		Rat Rat(double);
-		Rat Rat(string);
+		Rat();
+		Rat(int);
+		Rat(int,int);
+		Rat(double);
+		Rat(std::string);
+
+		friend std::ostream &operator<<(std::ostream &, const Rat &);
+		friend std::istream &operator>>(std::istream &, Rat &);
 };
+
+#endif
