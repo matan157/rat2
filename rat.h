@@ -3,6 +3,8 @@
 #include<string>
 
 class Rat {
+	friend std::ostream &operator<<(std::ostream &, const Rat &);
+	friend std::istream &operator>>(std::istream &, Rat &);
 	private:
 		int numerator;
 		int denominator;
@@ -15,8 +17,6 @@ class Rat {
 		Rat(double);
 		Rat(std::string);
 
-		friend std::ostream &operator<<(std::ostream &, const Rat &);
-		friend std::istream &operator>>(std::istream &, Rat &);
 };
 
 #endif

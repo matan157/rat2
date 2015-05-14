@@ -61,28 +61,28 @@ Rat::Rat(string str) {
 // end constructors
 //
 // insertion operators
-ostream &operator<<(ostream &cout, const Rat &r) {
+ostream &operator<<(ostream &out, const Rat &r) {
     if(r.NaN)
-	cout << "NaN";
+	out << "NaN";
     else if(r.numerator == 0)
-	cout << "0";
+	out << "0";
     else if(r.denominator == 1)
-	cout << r.numerator;
+	out << r.numerator;
     else
-	cout << '(' << r.numerator << '/' << r.denominator << ')';
-    return cout;
+	out << '(' << r.numerator << '/' << r.denominator << ')';
+    return out;
 }
 
-istream &operator>>(istream &cin, Rat &r) {
+istream &operator>>(istream &is, Rat &r) {
     string s;
     Rat tmp;
    
-    cin >> s;
+    is >> s;
     tmp = *(new Rat(s));
     r.numerator = tmp.numerator;
     r.denominator = tmp.denominator;
     r.NaN = tmp.NaN;
-    return cin; 
+    return is; 
 }
 // end insertion operators
 //
@@ -102,18 +102,16 @@ istream &operator>>(istream &cin, Rat &r) {
 
 int main() {
 
-    Rat r1, r2, r3, r4, r5, r6, r7, r8, r9;
+    //Rat r1 = *( new Rat());
+    Rat r2(2);
+    Rat r3("0.5");
+    Rat r4("5");
+    Rat r5(2,4);
+    Rat r6(3,0);
+    Rat r7(0.75);
+    Rat r8("hello");
 
-    r1 = *( new Rat());
-    r2 = *( new Rat(2));
-    r3 = *( new Rat("0.5"));
-    r4 = *( new Rat("5"));
-    r5 = *( new Rat(2,4));
-    r6 = *( new Rat(3,0));
-    r7 = *( new Rat(0.75));
-    r8 = *( new Rat("hello"));
-
-    cout << "This should be (0/1): " << r1 << endl;
+    //cout << "This should be (0/1): " << r1 << endl;
     cout << "This should be 2: " << r2 << endl;
     cout << "This should be (1/2): " << r3 << endl;
     cout << "This should be 5: " << r4 << endl;
