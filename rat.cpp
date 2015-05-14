@@ -37,7 +37,7 @@ Rat::Rat(string str) {
     for(int i = 0; i < str.length(); i++) {
 	if(str[i] == '.')
 	    sep = true;
-	if(str[i] == ' ') {
+	if((str[i] < '0' || str[i] > '9') && str[i] != '.') {
 	    numerator = 0;
 	    denominator = 1;
 	    NaN = true;
@@ -45,10 +45,10 @@ Rat::Rat(string str) {
 	}
     }
     if(sep)
-	r = new Rat(stod(str));
+	r = * ( new Rat(stod(str)));
     else
-	r = new Rat(stoi(str));
-    if(r.numerator != NULL && r.denominator != NULL && r.denominator != 0) {
+	r = *(new Rat(stoi(str)));
+    if(r.denominator != 0) {
 	numerator = r.numerator;
 	denominator = r.denominator;
 	NaN = r.NaN;
@@ -78,7 +78,7 @@ istream &operator>>(istream &cin, Rat &r) {
     Rat tmp;
    
     cin >> s;
-    tmp = new Rat(s);
+    tmp = *(new Rat(s));
     r.numerator = tmp.numerator;
     r.denominator = tmp.denominator;
     r.NaN = tmp.NaN;
@@ -104,14 +104,14 @@ int main() {
 
     Rat r1, r2, r3, r4, r5, r6, r7, r8, r9;
 
-    r1 = new Rat();
-    r2 = new Rat(2);
-    r3 = new Rat("0.5");
-    r4 = new Rat("5");
-    r5 = new Rat(2,4);
-    r6 = new Rat(3,0);
-    r7 = new Rat(0.75);
-    r8 = new Rat("hello");
+    r1 = *( new Rat());
+    r2 = *( new Rat(2));
+    r3 = *( new Rat("0.5"));
+    r4 = *( new Rat("5"));
+    r5 = *( new Rat(2,4));
+    r6 = *( new Rat(3,0));
+    r7 = *( new Rat(0.75));
+    r8 = *( new Rat("hello"));
 
     cout << "This should be (0/1): " << r1 << endl;
     cout << "This should be 2: " << r2 << endl;
