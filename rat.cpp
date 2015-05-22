@@ -10,6 +10,7 @@ using namespace std;
 Rat::Rat() : numerator(0), denominator(1), NaN(false) {}
 Rat::Rat(int x) : numerator(x), denominator(1), NaN(false) {}
 Rat::Rat(int n, int d) {
+    bool neg = false;
     if(d == 0) {
 	NaN = true;
 	numerator = 1;
@@ -19,9 +20,11 @@ Rat::Rat(int n, int d) {
     if(d < 0) {
 	n = -n;
 	d = -d;
+	neg = true;
     }
+    if(n < 0) neg = true;
     normalize(n,d);
-    numerator = n;
+    neg? numerator = -n : numerator = n;
     denominator = d;
     NaN = false;
 }
@@ -29,12 +32,15 @@ Rat::Rat(int n, int d) {
 Rat::Rat(double x) {
     int n, d, tmp = 8;
     double m;
+    bool neg;
+
+    if(x < 0) neg = true;
     
     m = (pow(10,tmp)) * x;
     n = (int)m;
     d = (int)(pow(10,tmp));
     normalize(n,d);
-    numerator = n;
+    neg? numerator = -n : numerator = n;
     denominator = d;
     d == 0? NaN = true : NaN = false;
 }
@@ -42,6 +48,7 @@ Rat::Rat(double x) {
 Rat::Rat(string str) {
     bool sep = false;
     bool paren = false;
+    bool neg = false;
     istringstream iss;
 
     int n, d;
@@ -50,13 +57,13 @@ Rat::Rat(string str) {
 	if(str[i] == '.')
 	    sep = true;
 	if((str[i] < '0' || str[i] > '9') && (str[i] != '.'
-	&& str[i] != '(' && str[i] != ')' && str[i] != '/')) {
+	&& str[i] != '(' && str[i] != ')' && str[i] != '/' && str[i] != '-')) {
 	    numerator = 0;
 	    denominator = 1;
 	    NaN = true;
 	    return;
 	}
-	if(str[i] == '(')
+	if(str[i] == '(' || str[i] == '/')
 	    paren = true;
     }
     if(paren) {
@@ -67,7 +74,14 @@ Rat::Rat(string str) {
 	iss.str(str);
 	iss >> n;
 	iss >> d;
-	numerator = n;
+	if(d < 0) {
+	    n = -n;
+	    d = -d;
+	    neg = true;
+	}
+	if(n < 0) neg = true;
+	normalize(n,d);
+	neg? numerator = -n : numerator = n;
 	denominator = d;
 	NaN = false;
 	return;
@@ -302,6 +316,7 @@ int main() {
 
     r9 = -r9;
     cout << "This should be (-3/2): " << r9 << endl;
+    // stupid unary isn't working
     return 0;
 }
 #endif
