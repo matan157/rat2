@@ -115,7 +115,61 @@ istream &operator>>(istream &is, Rat &r) {
 // end insertion operators
 //
 // assignment operators
+Rat &Rat::operator+=(const Rat &r) {
+    int t1 = denominator, t2 = r.denominator;
+    int n2 = r.numerator, d2 = r.denominator;
+    if(denominator == r.denominator) {
+	numerator = numerator + r.numerator;
+    } else { 
+	numerator *= t2;
+	denominator *= t2;
+	n2 *= t1;
+	d2 *= t1;
+    	numerator += n2;
+    }
+    t1 = numerator;
+    t2 = denominator;
+    normalize(t1,t2);
+    numerator = t1;
+    denominator = t2;
+    return *this;
+}
+Rat &Rat::operator-=(const Rat &r) {
+    int t1 = denominator, t2 = r.denominator;
+    int n2 = r.numerator, d2 = r.denominator;
+    if(denominator == r.denominator) {
+	numerator = numerator - r.numerator;
+    } else { 
+	numerator *= t2;
+	denominator *= t2;
+	n2 *= t1;
+	d2 *= t1;
+    	numerator -= n2;
+    }
+    t1 = numerator;
+    t2 = denominator;
+    normalize(t1,t2);
+    numerator = t1;
+    denominator = t2;
+    return *this;
+}
+Rat &Rat::operator*=(const Rat &r) {
+    int n, d;
+    n = numerator * r.numerator;
+    d = denominator * r.denominator;
+    normalize(n,d);
+    numerator = n;
+    denominator = d;
+    return *this;
+}
 
+Rat &Rat::operator/=(const Rat &r) {
+    int n = r.denominator * numerator, d = r.numerator * denominator;
+    normalize(n,d);
+    numerator = n;
+    denominator = d;
+    return *this;
+}
 // end assignment operators
 //
 // arithmetic operators
@@ -163,6 +217,17 @@ int main() {
     cout << "This should be (3/4): " << r7 << endl;
     cout << "This should be NaN: " << r8 << endl;
 
+    r5+=r7;
+    cout << "This should be (5/4): " << r5 << endl;
+    
+    r5-=r7;
+    cout << "This should be (1/2): " << r5 << endl;
+
+    r5*=r7;
+    cout << "This should be (3/8): " << r5 << endl;
+
+    r5/=r7;
+    cout << "This should be (1/2): " << r5 << endl;
     return 0;
 }
 #endif

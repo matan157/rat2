@@ -17,6 +17,12 @@ class Rat {
 		Rat(double);
 		Rat(std::string);
 
+		// assignment operators
+		Rat &operator+=(const Rat &);
+		Rat &operator-=(const Rat &);
+		Rat &operator*=(const Rat &);
+		Rat &operator/=(const Rat &);
+
 };
 
 #endif
