@@ -173,11 +173,61 @@ Rat &Rat::operator/=(const Rat &r) {
 // end assignment operators
 //
 // arithmetic operators
+Rat operator+(const Rat &r1, const Rat &r2) {
+    int n, d;
+    n = (r1.numerator * r2.denominator) + (r2.numerator * r1.denominator);
+    d = (r1.denominator * r2.denominator);
+    return Rat(n,d);
+}
+Rat operator-(const Rat &r1, const Rat &r2) {
+    int n, d;
+    n = (r1.numerator * r2.denominator) - (r2.numerator * r1.denominator);
+    d = (r1.denominator * r2.denominator);
+    return Rat(n,d);
+}
 
+Rat operator*(const Rat &r1, const Rat &r2) {
+    int n, d;
+    n = r1.numerator * r2.numerator;
+    d = r1.denominator * r2.denominator;
+    return Rat(n,d);
+}
+Rat operator/(const Rat &r1, const Rat &r2) {
+    int n, d;
+    n = r1.numerator * r2.denominator;
+    d = r1.denominator * r2.numerator;
+    return Rat(n,d);
+}
+Rat operator-(const Rat &r) {
+    return Rat(-r.numerator, r.denominator);
+}
 // end arithmetic operators
 //
 // conditional operators
-
+bool operator==(const Rat &r1, const Rat &r2) {
+    return (r1.numerator == r2.numerator && r1.denominator == r2.denominator);
+}
+bool operator!=(const Rat &r1, const Rat &r2) {
+    return !(r1 == r2);
+}
+bool operator>(const Rat &r1, const Rat &r2) {
+    int n1, n2;
+    n1 = r1.numerator * r2.denominator;
+    n2 = r2.numerator * r1.denominator;
+    return (n1 > n2);
+}
+bool operator<(const Rat &r1, const Rat &r2) {
+    int n1, n2;
+    n1 = r1.numerator * r2.denominator;
+    n2 = r2.numerator * r1.denominator;
+    return (n1 < n2);
+}
+bool operator>=(const Rat &r1, const Rat &r2) {
+    return (r1 > r2) || (r1 == r2);
+}
+bool operator<=(const Rat &r1, const Rat &r2) {
+    return (r1 < r2) || (r1 == r2);
+}
 // end conditional operators
 
 #ifdef TEST
@@ -200,6 +250,8 @@ int main() {
     cout << "(3/4)" << endl;
     Rat r8("hello");
     cout << "NaN" << endl;
+    Rat r10(-2,5);
+    cout << "(-2/5): " << r10 << endl;
 
     Rat r9;
     cout << "enter rat number: ";
@@ -216,6 +268,13 @@ int main() {
     cout << "This should be NaN: " << r6 << endl;
     cout << "This should be (3/4): " << r7 << endl;
     cout << "This should be NaN: " << r8 << endl;
+    
+    cout << "SHould be true: " << (r3 == r5? "true" : "false") << endl;
+    cout << "Should be false: " << (r3 != r5? "true" : "false") << endl;
+    cout << "Should be true: " << (r7 > r5? "true" : "false") << endl;
+    cout << "Should be false: " << (r7 < r5? "true" : "false") << endl;
+    cout << "Should be true: " << (r7 >= r5? "true" : r5 >= r3? "true" : "false") << endl;
+    cout << "Should be false: " << (r7 <= r5? "true" : "false") << endl;
 
     r5+=r7;
     cout << "This should be (5/4): " << r5 << endl;
@@ -228,6 +287,21 @@ int main() {
 
     r5/=r7;
     cout << "This should be (1/2): " << r5 << endl;
+
+    r9 = r5 + r7;
+    cout << "this should be (5/4): " << r9 << endl;
+
+    r9 = r7 - r5;
+    cout << "This should be (1/4): " << r9 << endl;
+
+    r9 = r7 * r5;
+    cout << "This should be (3/8): " << r9 << endl;
+
+    r9 = r7 / r5;
+    cout << "This should be (3/2): " << r9 << endl;
+
+    r9 = -r9;
+    cout << "This should be (-3/2): " << r9 << endl;
     return 0;
 }
 #endif
